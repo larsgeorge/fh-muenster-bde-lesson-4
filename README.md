@@ -11,10 +11,10 @@ Das Repository enthält die MapReduce und Search Beispiele aus der letzten Vorle
 Wie besprochen, hier einige Links mit Ideen zur Textbearbeitung:
 
 * Flume basierend
-   [Blog Post 1](http://blog.cloudera.com/blog/2012/09/analyzing-twitter-data-with-hadoop/)
-   [Blog Post 2](http://blog.cloudera.com/blog/2012/10/analyzing-twitter-data-with-hadoop-part-2-gathering-data-with-flume/)
-   [Blog Post 3](http://blog.cloudera.com/blog/2012/11/analyzing-twitter-data-with-hadoop-part-3-querying-semi-structured-data-with-hive/)
-   [Blog Post 4](http://jameskinley.tumblr.com/post/57704266739/real-time-analytics-in-apache-flume-part-1)
+   - [Blog Post 1](http://blog.cloudera.com/blog/2012/09/analyzing-twitter-data-with-hadoop/)
+   - [Blog Post 2](http://blog.cloudera.com/blog/2012/10/analyzing-twitter-data-with-hadoop-part-2-gathering-data-with-flume/)
+   - [Blog Post 3](http://blog.cloudera.com/blog/2012/11/analyzing-twitter-data-with-hadoop-part-3-querying-semi-structured-data-with-hive/)
+   - [Blog Post 4](http://jameskinley.tumblr.com/post/57704266739/real-time-analytics-in-apache-flume-part-1)
 
 ## Building
 
@@ -66,7 +66,7 @@ In dieser Übung ging es darum die Ausgabe des TF-IDF Codes aus der letzten Übu
 
 Danach steht die Jetty basierte Weboberfläche unter http://localhost:8080 zur Verfügung. Eine Suche sollte so aussehen:
 
-![Suchergebnis](https://raw.github.com/larsgeorge/fh-muenster-bde-lesson-4/branch/static/img/search1.png)
+![Suchergebnis](https://raw.github.com/larsgeorge/fh-muenster-bde-lesson-4/master/static/img/search1.png)
 
 Viel Glück!
 
