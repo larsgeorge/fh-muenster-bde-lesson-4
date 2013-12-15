@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <Target>System.out</Target>
+        <encoder>
+            <pattern>%d{HH:mm:ss}%6p %t - %m \(%F:%L\)[%c]%n</pattern>
+        </encoder>
+        <!--
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+        -->
+    </appender>
+    <logger name="org.jboss.cache.factories" level="INFO"/>
+    <logger name="org.jboss.cache.eviction" level="ERROR"/>
+    <logger name="com.cloudera.fts" level="DEBUG"/>
+    <root level="DEBUG">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+</configuration>
