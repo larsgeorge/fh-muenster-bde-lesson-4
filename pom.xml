@@ -119,6 +119,10 @@
       <id>cloudera</id>
       <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
     </repository>
+    <repository>
+      <id>cloudera-search</id>
+      <url>https://repository.cloudera.com/artifactory/repo/com/cloudera/search/search-mr/1.1.0/</url>
+    </repository>
   </repositories>
 
   <dependencies>
@@ -536,6 +540,41 @@
         <exclusion>
           <artifactId>jline</artifactId>
           <groupId>jline</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.cloudera.search</groupId>
+      <artifactId>search-mr</artifactId>
+      <version>1.1.0</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>solr-core</artifactId>
+          <groupId>org.apache.solr</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>httpclient</artifactId>
+          <groupId>org.apache.httpcomponents</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>tika-xmp</artifactId>
+          <groupId>org.apache.tika</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>concurrentlinkedhashmap-lru</artifactId>
+          <groupId>com.googlecode.concurrentlinkedhashmap</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>lucene-codecs</artifactId>
+          <groupId>org.apache.lucene</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>cdk-morphlines-avro</artifactId>
+          <groupId>com.cloudera.cdk</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>cdk-morphlines-saxon</artifactId>
+          <groupId>com.cloudera.cdk</groupId>
         </exclusion>
       </exclusions>
     </dependency>
