@@ -68,6 +68,12 @@ Danach steht die Jetty basierte Weboberfläche unter http://localhost:8080 zur V
 
 ![Suchergebnis](https://raw.github.com/larsgeorge/fh-muenster-bde-lesson-4/master/static/img/search1.png)
 
+### Quellen
+
+* [Blog Post 1](https://github.com/jshmain/cloudera-search/tree/master/email-search)
+* [Blog Post 2](https://github.com/alo-alt/solr-demo)
+* Kite SDK - [Morphlines](http://kitesdk.org/docs/current/kite-morphlines/index.html)
+
 Viel Glück!
 
 Lars George
