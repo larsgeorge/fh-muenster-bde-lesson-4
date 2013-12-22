@@ -37,7 +37,7 @@ public class PortalApi {
   private Map<String, DocumentInfo> documentInfoMap;
   private ObjectMapper objectMapper = new ObjectMapper();
   private Pattern pattern = Pattern.compile(
-    "(\\w+)@(\\w+)\\.\\w+\\s+\\[\\d+/\\d+ , \\d+/\\d+ , (\\d+\\.\\d+)\\]");
+    "(\\w+)@(\\w+)\\.\\w+\\s+\\[\\d+/\\d+ , \\d+/\\d+ , (\\S+)\\]");
 
   // angles@pg30601.txt      [8/20 , 3/40770 , 0.00002928]
   // angles@pg4300.txt       [8/20 , 3/174698 , 0.00000683]
