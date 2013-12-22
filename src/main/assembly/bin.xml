@@ -29,5 +29,9 @@
         <exclude>*.jar</exclude>
       </excludes>
     </fileSet>
+    <fileSet>
+         <directory>src/main/webapp</directory>
+         <outputDirectory>/webapp</outputDirectory>
+     </fileSet>
   </fileSets>
 </assembly>
