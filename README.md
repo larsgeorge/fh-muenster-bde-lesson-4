@@ -15,6 +15,7 @@ Wie besprochen, hier einige Links mit Ideen zur Textbearbeitung:
    - [Blog Post 2](http://blog.cloudera.com/blog/2012/10/analyzing-twitter-data-with-hadoop-part-2-gathering-data-with-flume/)
    - [Blog Post 3](http://blog.cloudera.com/blog/2012/11/analyzing-twitter-data-with-hadoop-part-3-querying-semi-structured-data-with-hive/)
    - [Blog Post 4](http://jameskinley.tumblr.com/post/57704266739/real-time-analytics-in-apache-flume-part-1)
+* Data processing with Hive and MapReduce
    - [Data Wrangler](http://www.datawrangling.com/)
      + [Trending Topics](http://blog.cloudera.com/blog/2009/07/tracking-trends-with-hadoop-and-hive-on-ec2/)
 
