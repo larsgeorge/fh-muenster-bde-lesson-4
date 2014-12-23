@@ -39,7 +39,7 @@
           </descriptors>
           <archive>
             <manifest>
-              <mainClass>org.fhmuenster.bde.mr.Driver</mainClass>
+              <mainClass>org.fhmuenster.bde.Driver</mainClass>
             </manifest>
           </archive>
         </configuration>
