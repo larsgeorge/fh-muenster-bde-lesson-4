@@ -58,16 +58,37 @@ public class FileFormats {
   private int payloadSize = DEFAULT_PAYLOAD_SIZE;
   private Random random = new Random();
   
-  enum FileFormat {
-    TEXT, AVRO, SEQUENCE, PARQUET
-  }
+  enum FileFormat { TEXT, AVRO, SEQUENCE, PARQUET }
+  enum CompressionType { NONE, RECORD, BLOCK }
 
-  enum CompressionType {
-    NONE, RECORD, BLOCK
-  }
-
+  /**
+   * Enum that encapsulates the details for compression codecs.
+   */
   enum CompressionCodec {
-    NONE, SNAPPY, GZIP, BZIP2
+    NONE(null),
+    DEFLATE("org.apache.hadoop.io.compress.DefaultCodec"),
+    GZIP("org.apache.hadoop.io.compress.GzipCodec"),
+    BZIP2("org.apache.hadoop.io.compress.BZip2Codec"),
+    LZO("com.hadoop.compression.lzo.LzopCodec"),
+    LZ4("org.apache.hadoop.io.compress.Lz4Codec"),
+    SNAPPY("org.apache.hadoop.io.compress.SnappyCodec");
+
+    private String classname;
+
+    CompressionCodec(String classname) {
+      this.classname = classname;      
+    }
+    
+    
+    public String getClassname() {
+      return classname;
+    }
+
+    public org.apache.hadoop.io.compress.CompressionCodec getCodec() 
+    throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+      Class<?> clazz = Class.forName(classname);
+      return (org.apache.hadoop.io.compress.CompressionCodec) clazz.newInstance();
+    }
   }
 
   /**
@@ -115,8 +136,7 @@ public class FileFormats {
       this.compressionType = compressionType;
     }
 
-    public abstract void write(byte[] key, byte[] payload) throws IOException;
-    
+    public abstract void write(byte[] key, byte[] payload) throws IOException;    
     public abstract void close() throws IOException;
   }
 
@@ -170,9 +190,19 @@ public class FileFormats {
     public SequenceWriter(Path path, CompressionCodec compressionCodec, 
       CompressionType compressionType) throws IOException {
       super(path, compressionCodec, compressionType);
-      out = SequenceFile.createWriter(configuration, SequenceFile.Writer.file(path), 
+      SequenceFile.Writer.Option[] opts = { SequenceFile.Writer.file(path), 
         SequenceFile.Writer.keyClass(BytesWritable.class), 
-        SequenceFile.Writer.valueClass(BytesWritable.class));
+        SequenceFile.Writer.valueClass(BytesWritable.class) };
+      if (compressionType != CompressionType.NONE) 
+        try { 
+          opts = org.apache.hadoop.util.Options.prependOptions(opts, 
+            SequenceFile.Writer.compression(
+              SequenceFile.CompressionType.valueOf(compressionType.toString()), 
+              compressionCodec.getCodec()));
+        } catch (Exception e) {
+          throw new IOException("Compression failed to load!", e);
+        }
+      out = SequenceFile.createWriter(configuration, opts);
     }
 
     @Override
@@ -302,6 +332,10 @@ public class FileFormats {
       payloadSize = Integer.parseInt(params.getOptionValue("p"));
     if (params.hasOption("n"))
       recordCount = Integer.parseInt(params.getOptionValue("n"));
+    if (params.hasOption("t"))
+      compressionType = CompressionType.valueOf(params.getOptionValue("t").toUpperCase());
+    if (params.hasOption("c"))
+      compressionCodec = CompressionCodec.valueOf(params.getOptionValue("c").toUpperCase());
   }
 
   /**
