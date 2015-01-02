@@ -71,6 +71,63 @@ Danach steht die Jetty basierte Weboberfläche unter http://localhost:8080 zur V
 
 ![Suchergebnis](https://raw.github.com/larsgeorge/fh-muenster-bde-lesson-4/master/static/img/search1.png)
 
+## Datei Formate
+
+Nachdem die JAR Datei wie oben beschrieben erstellt worden ist, kann man das Datei Format Beispiel ausführen. Dazu einfach die JAR Datei __ohne__ Parameter ausführen:
+
+    $ hadoop jar target/fh-muenster-bde-lesson-4-1.0-SNAPSHOT-bin.jar
+    An example program must be given as the first argument.
+    Valid program names are:
+      fileformats: Create various file formats.
+      searchserver: Start the search server.
+      testmorphline: Run a morphline locally.
+      tfidf: MapReduce program to compute TF-IDF of input text files.
+
+Die ganzen Optionen des Beispiels sind wiederum durch Aufruf __mit__ Programmname, aber __ohne__ weitere Argumente auflistbar: 
+
+    $ hadoop jar target/fh-muenster-bde-lesson-4-1.0-SNAPSHOT-bin.jar fileformats
+    ERROR: Missing parameters!
+    usage: FileFormats [-c <arg>] [-f <arg>] [-h] [-k <arg>] [-n <arg>] -o
+	   <filename> [-p <arg>] [-t <arg>]
+     -c,--compressioncodec <arg>   the compression codec to use: snappy,
+				   bzip2, gzip
+     -f,--format <arg>             the format to write in: avro, sequence,
+				   parquet
+     -h,--help                     show this help
+     -k,--sizeofkey <arg>          size in bytes of the record key
+     -n,--numberofrecords <arg>    the number of records to create
+     -o,--outputfile <filename>    name of the file to write to
+     -p,--sizeofpayload <arg>      size in bytes of the record payload (value)
+     -t,--compressiontype <arg>    the compression type to use: none, record,
+				   block
+
+Hier ein Test mit einem SequenceFile einmal ohne und einmal mit Komprimierung (hier Snappy):
+
+    $ hadoop jar target/fh-muenster-bde-lesson-4-1.0-SNAPSHOT-bin.jar fileformats -o /tmp/sequence.bin -f sequence
+    Writing to file: /tmp/sequence.bin
+    Creating random arrays...
+    14/12/23 11:44:42 INFO zlib.ZlibFactory: Successfully loaded & initialized native-zlib library
+    14/12/23 11:44:42 INFO compress.CodecPool: Got brand-new compressor [.deflate]
+    Starting loop...
+    ..........
+    Loop complete, emitted record count: 10000
+    Elapsed time: 1052 ms
+    Create file size: 2492359 bytes
+    Path: hdfs://quickstart.cloudera:8020/tmp/sequence.bin
+
+    $ hadoop jar target/fh-muenster-bde-lesson-4-1.0-SNAPSHOT-bin.jar fileformats -o /tmp/sequence.bin -f sequence -t block -c snappy
+    Writing to file: /tmp/sequence.bin
+    Creating random arrays...
+    14/12/23 11:45:07 INFO compress.CodecPool: Got brand-new compressor [.snappy]
+    Starting loop...
+    ..........
+    Loop complete, emitted record count: 10000
+    Elapsed time: 456 ms
+    Create file size: 122046 bytes
+    Path: hdfs://quickstart.cloudera:8020/tmp/sequence.bin
+
+Dies zeigt, dass ein SequenceFile mit Block Komprimierung mit Snappy ungefähr 20 mal kleiner ist, als ohne jegliche Komprimierung. 
+
 ### Quellen
 
 * [Blog Post 1](https://github.com/jshmain/cloudera-search/tree/master/email-search)
@@ -80,3 +137,4 @@ Danach steht die Jetty basierte Weboberfläche unter http://localhost:8080 zur V
 Viel Glück!
 
 Lars George
+
