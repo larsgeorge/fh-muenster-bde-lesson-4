@@ -112,17 +112,8 @@
       </snapshots>
     </repository>
     <repository>
-      <id>maven-hadoop</id>
-      <name>Hadoop Releases</name>
-      <url>https://repository.cloudera.com/content/repositories/releases/</url>
-    </repository>
-    <repository>
       <id>cloudera</id>
       <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
-    </repository>
-    <repository>
-      <id>cloudera-search</id>
-      <url>https://repository.cloudera.com/artifactory/repo/com/cloudera/search/search-mr/1.1.0/</url>
     </repository>
   </repositories>
 
