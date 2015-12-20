@@ -1,7 +1,10 @@
 package org.fhmuenster.bde.http;
 
 import java.util.EnumSet;
+import javax.servlet.DispatcherType;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -9,15 +12,12 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
-import org.eclipse.jetty.server.DispatcherType;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.webapp.WebAppContext;
-
 import com.google.inject.servlet.GuiceFilter;
+
 import org.fhmuenster.bde.config.PortalConfiguration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class HttpServerMain {
 

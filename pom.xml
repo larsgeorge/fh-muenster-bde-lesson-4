@@ -12,27 +12,16 @@
   <url>http://maven.apache.org</url>
 
   <properties>
-    <jdkLevel>1.6</jdkLevel>
+    <jdkLevel>1.7</jdkLevel>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
-
-    <!-- Dependency Versions -->
-    <dep.slf4j>1.7.5</dep.slf4j>
-    <dep.logback>1.0.13</dep.logback>
-    <dep.junit>4.11</dep.junit>
-    <dep.easymock>3.2</dep.easymock>
-
-    <dep.guice>3.0</dep.guice>
-    <dep.jersey>1.17.1</dep.jersey>
-    <dep.jetty>7.6.13.v20130916</dep.jetty>
-    <dep.jackson>2.2.3</dep.jackson> 
   </properties>
 
   <build>
     <plugins>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.4</version>
+        <version>2.6</version>
         <configuration>
           <descriptors>
             <descriptor>src/main/assembly/bin.xml</descriptor>
@@ -56,7 +45,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>appassembler-maven-plugin</artifactId>
-        <version>1.3.1</version>
+        <version>1.10</version>
         <executions>
           <execution>
             <id>make-scripts</id>
@@ -82,38 +71,24 @@
 
   <repositories>
     <repository>
-      <id>jboss-public-group</id>
-      <url>https://repository.jboss.org/nexus/content/groups/public</url>
-      <layout>default</layout>
+      <id>cloudera-releases</id>
+      <url>https://repository.cloudera.com/artifactory/cloudera-repos</url>
       <releases>
         <enabled>true</enabled>
-        <updatePolicy>always</updatePolicy>
-        <checksumPolicy>warn</checksumPolicy>
       </releases>
       <snapshots>
         <enabled>false</enabled>
-        <updatePolicy>never</updatePolicy>
-        <checksumPolicy>fail</checksumPolicy>
       </snapshots>
     </repository>
     <repository>
-      <id>apache-releases</id>
-      <url>https://repository.apache.org/content/repositories/releases/</url>
-      <layout>default</layout>
+      <id>Maven Central</id>
+      <url>http://repo2.maven.org/maven2</url>
       <releases>
         <enabled>true</enabled>
-        <updatePolicy>always</updatePolicy>
-        <checksumPolicy>warn</checksumPolicy>
       </releases>
       <snapshots>
         <enabled>false</enabled>
-        <updatePolicy>never</updatePolicy>
-        <checksumPolicy>fail</checksumPolicy>
       </snapshots>
-    </repository>
-    <repository>
-      <id>cloudera</id>
-      <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
     </repository>
   </repositories>
 
@@ -121,7 +96,7 @@
     <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-common</artifactId>
-      <version>2.5.0-cdh5.2.0</version>
+      <version>2.6.0-cdh5.4.7</version>
       <exclusions>
         <exclusion>
           <artifactId>hadoop-annotations</artifactId>
@@ -275,12 +250,56 @@
           <artifactId>jackson-mapper-asl</artifactId>
           <groupId>org.codehaus.jackson</groupId>
         </exclusion>
+        <exclusion>
+          <artifactId>commons-math3</artifactId>
+          <groupId>org.apache.commons</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>commons-math3</artifactId>
+          <groupId>org.apache.commons</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>commons-math3</artifactId>
+          <groupId>org.apache.commons</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>commons-math3</artifactId>
+          <groupId>org.apache.commons</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>commons-collections</artifactId>
+          <groupId>commons-collections</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>gson</artifactId>
+          <groupId>com.google.code.gson</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>curator-client</artifactId>
+          <groupId>org.apache.curator</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>curator-recipes</artifactId>
+          <groupId>org.apache.curator</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>jsr305</artifactId>
+          <groupId>com.google.code.findbugs</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>commons-compress</artifactId>
+          <groupId>org.apache.commons</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>htrace-core</artifactId>
+          <groupId>org.htrace</groupId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-hdfs</artifactId>
-      <version>2.5.0-cdh5.2.0</version>
+      <version>2.6.0-cdh5.4.7</version>
       <exclusions>
         <exclusion>
           <artifactId>zookeeper</artifactId>
@@ -366,12 +385,24 @@
           <artifactId>jackson-mapper-asl</artifactId>
           <groupId>org.codehaus.jackson</groupId>
         </exclusion>
+        <exclusion>
+          <artifactId>netty</artifactId>
+          <groupId>io.netty</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>leveldbjni-all</artifactId>
+          <groupId>org.fusesource.leveldbjni</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>htrace-core</artifactId>
+          <groupId>org.htrace</groupId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-client</artifactId>
-      <version>2.5.0-cdh5.2.0</version>
+      <version>2.6.0-cdh5.4.7</version>
       <exclusions>
         <exclusion>
           <artifactId>hadoop-common</artifactId>
@@ -385,12 +416,63 @@
           <artifactId>hadoop-core</artifactId>
           <groupId>org.apache.hadoop</groupId>
         </exclusion>
+        <exclusion>
+          <artifactId>hadoop-mapreduce-client-app</artifactId>
+          <groupId>org.apache.hadoop</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hadoop-yarn-api</artifactId>
+          <groupId>org.apache.hadoop</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hadoop-mapreduce-client-core</artifactId>
+          <groupId>org.apache.hadoop</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hadoop-mapreduce-client-jobclient</artifactId>
+          <groupId>org.apache.hadoop</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hadoop-aws</artifactId>
+          <groupId>org.apache.hadoop</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hadoop-annotations</artifactId>
+          <groupId>org.apache.hadoop</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-mapreduce-client-core</artifactId>
+      <version>2.6.0-cdh5.4.7</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>hadoop-yarn-common</artifactId>
+          <groupId>org.apache.hadoop</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>protobuf-java</artifactId>
+          <groupId>com.google.protobuf</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>slf4j-log4j12</artifactId>
+          <groupId>org.slf4j</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hadoop-annotations</artifactId>
+          <groupId>org.apache.hadoop</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>netty</artifactId>
+          <groupId>io.netty</groupId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-auth</artifactId>
-      <version>2.5.0-cdh5.2.0</version>
+      <version>2.6.0-cdh5.4.7</version>
       <exclusions>
         <exclusion>
           <artifactId>slf4j-api</artifactId>
@@ -408,12 +490,24 @@
           <artifactId>slf4j-log4j12</artifactId>
           <groupId>org.slf4j</groupId>
         </exclusion>
+        <exclusion>
+          <artifactId>httpclient</artifactId>
+          <groupId>org.apache.httpcomponents</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>apacheds-kerberos-codec</artifactId>
+          <groupId>org.apache.directory.server</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>curator-framework</artifactId>
+          <groupId>org.apache.curator</groupId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.avro</groupId>
       <artifactId>avro</artifactId>
-      <version>1.7.4</version>
+      <version>1.7.7</version>
       <exclusions>
         <exclusion>
           <artifactId>jackson-core-asl</artifactId>
@@ -444,7 +538,7 @@
     <dependency>
       <groupId>org.apache.zookeeper</groupId>
       <artifactId>zookeeper</artifactId>
-      <version>3.4.5-cdh5.2.0</version>
+      <version>3.4.5-cdh5.4.7</version>
       <exclusions>
         <exclusion>
           <artifactId>log4j</artifactId>
@@ -454,12 +548,20 @@
           <artifactId>jline</artifactId>
           <groupId>jline</groupId>
         </exclusion>
+        <exclusion>
+          <artifactId>slf4j-log4j12</artifactId>
+          <groupId>org.slf4j</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>netty</artifactId>
+          <groupId>org.jboss.netty</groupId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
       <groupId>com.cloudera.search</groupId>
       <artifactId>search-mr</artifactId>
-      <version>1.3.0</version>
+      <version>1.0.0-cdh5.4.7</version>
       <exclusions>
         <exclusion>
           <artifactId>httpclient</artifactId>
@@ -621,6 +723,18 @@
           <artifactId>commons-compress</artifactId>
           <groupId>org.apache.commons</groupId>
         </exclusion>
+        <exclusion>
+          <artifactId>kite-morphlines-all</artifactId>
+          <groupId>org.kitesdk</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>solr-core</artifactId>
+          <groupId>org.apache.solr</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>argparse4j</artifactId>
+          <groupId>net.sourceforge.argparse4j</groupId>
+        </exclusion>
       </exclusions>
     </dependency>
 
@@ -628,7 +742,7 @@
     <dependency>
       <groupId>com.google.inject</groupId>
       <artifactId>guice</artifactId>
-      <version>${dep.guice}</version>
+      <version>4.0</version>
       <exclusions>
         <exclusion>
           <groupId>javax.inject</groupId>
@@ -643,7 +757,7 @@
     <dependency>
       <groupId>com.google.inject.extensions</groupId>
       <artifactId>guice-servlet</artifactId>
-      <version>${dep.guice}</version>
+      <version>4.0</version>
       <exclusions>
         <exclusion>
           <groupId>com.google.inject</groupId>
@@ -654,7 +768,7 @@
     <dependency>
       <groupId>com.google.inject.extensions</groupId>
       <artifactId>guice-assistedinject</artifactId>
-      <version>${dep.guice}</version>
+      <version>4.0</version>
       <exclusions>
         <exclusion>
           <groupId>com.google.inject</groupId>
@@ -675,7 +789,17 @@
     <dependency>
       <groupId>com.google.code.findbugs</groupId>
       <artifactId>annotations</artifactId>
-      <version>2.0.1</version>
+      <version>3.0.1</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>jcip-annotations</artifactId>
+          <groupId>net.jcip</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>jsr305</artifactId>
+          <groupId>com.google.code.findbugs</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>aopalliance</groupId>
@@ -687,12 +811,18 @@
     <dependency>
       <groupId>com.sun.jersey</groupId>
       <artifactId>jersey-core</artifactId>
-      <version>${dep.jersey}</version>
+      <version>1.19</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>jsr311-api</artifactId>
+          <groupId>javax.ws.rs</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>com.sun.jersey</groupId>
       <artifactId>jersey-server</artifactId>
-      <version>${dep.jersey}</version>
+      <version>1.19</version>
       <exclusions>
         <exclusion>
           <artifactId>asm</artifactId>
@@ -707,7 +837,7 @@
     <dependency>
       <groupId>com.sun.jersey</groupId>
       <artifactId>jersey-servlet</artifactId>
-      <version>${dep.jersey}</version>
+      <version>1.19</version>
       <exclusions>
         <exclusion>
           <artifactId>jersey-server</artifactId>
@@ -718,7 +848,7 @@
     <dependency>
       <groupId>com.sun.jersey.contribs</groupId>
       <artifactId>jersey-guice</artifactId>
-      <version>${dep.jersey}</version>
+      <version>1.19</version>
       <exclusions>
         <exclusion>
           <artifactId>javax.inject</artifactId>
@@ -741,7 +871,7 @@
     <dependency>
       <groupId>com.sun.jersey</groupId>
       <artifactId>jersey-client</artifactId>
-      <version>${dep.jersey}</version>
+      <version>1.19</version>
       <exclusions>
         <exclusion>
           <artifactId>jersey-core</artifactId>
@@ -752,7 +882,7 @@
     <dependency>
       <groupId>com.sun.jersey.contribs</groupId>
       <artifactId>jersey-apache-client</artifactId>
-      <version>${dep.jersey}</version>
+      <version>1.19</version>
       <exclusions>
         <exclusion>
           <artifactId>commons-httpclient</artifactId>
@@ -764,17 +894,22 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <dependency>
+      <groupId>javax.ws.rs</groupId>
+      <artifactId>javax.ws.rs-api</artifactId>
+      <version>2.0.1</version>
+    </dependency>
 
     <!-- Jackson Dependencies -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
-      <version>${dep.jackson}</version>
+      <version>2.6.3</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.jaxrs</groupId>
       <artifactId>jackson-jaxrs-base</artifactId>
-      <version>${dep.jackson}</version>
+      <version>2.6.3</version>
       <exclusions>
         <exclusion>
           <artifactId>jackson-core</artifactId>
@@ -789,7 +924,7 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>${dep.jackson}</version>
+      <version>2.6.3</version>
       <exclusions>
         <exclusion>
           <groupId>com.fasterxml.jackson.core</groupId>
@@ -804,12 +939,12 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-annotations</artifactId>
-      <version>${dep.jackson}</version>
+      <version>2.6.3</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.jaxrs</groupId>
       <artifactId>jackson-jaxrs-json-provider</artifactId>
-      <version>${dep.jackson}</version>
+      <version>2.6.3</version>
       <exclusions>
         <exclusion>
           <groupId>com.fasterxml.jackson.core</groupId>
@@ -836,7 +971,7 @@
     <dependency>
       <groupId>org.jboss.resteasy</groupId>
       <artifactId>resteasy-jackson-provider</artifactId>
-      <version>3.0.4.Final</version>
+      <version>3.0.13.Final</version>
       <exclusions>
         <exclusion>
           <groupId>org.codehaus.jackson</groupId>
@@ -859,12 +994,12 @@
     <dependency>
       <groupId>org.codehaus.jackson</groupId>
       <artifactId>jackson-core-asl</artifactId>
-      <version>1.9.4</version>
+      <version>1.9.13</version>
     </dependency>
     <dependency>
       <groupId>org.codehaus.jackson</groupId>
       <artifactId>jackson-mapper-asl</artifactId>
-      <version>1.9.4</version>
+      <version>1.9.13</version>
       <exclusions>
         <exclusion>
           <groupId>org.codehaus.jackson</groupId>
@@ -875,12 +1010,12 @@
     <dependency>
       <groupId>org.json</groupId>
       <artifactId>json</artifactId>
-      <version>20090211</version>
+      <version>20150729</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
       <artifactId>jackson-datatype-json-org</artifactId>
-      <version>${dep.jackson}</version>
+      <version>2.6.3</version>
       <exclusions>
         <exclusion>
           <artifactId>jackson-core</artifactId>
@@ -894,14 +1029,23 @@
           <artifactId>json</artifactId>
           <groupId>org.json</groupId>
         </exclusion>
+        <exclusion>
+          <artifactId>json</artifactId>
+          <groupId>org.apache.geronimo.bundles</groupId>
+        </exclusion>
       </exclusions>
     </dependency>
 
     <!-- Jetty Dependencies -->
     <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
+    </dependency>
+    <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-server</artifactId>
-      <version>${dep.jetty}</version>
+      <version>9.2.13.v20150730</version>
       <exclusions>
         <exclusion>
           <artifactId>jetty-http</artifactId>
@@ -915,12 +1059,16 @@
           <artifactId>javax.servlet</artifactId>
           <groupId>org.eclipse.jetty.orbit</groupId>
         </exclusion>
+        <exclusion>
+          <artifactId>javax.servlet-api</artifactId>
+          <groupId>javax.servlet</groupId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-servlet</artifactId>
-      <version>${dep.jetty}</version>
+      <version>9.2.13.v20150730</version>
       <exclusions>
         <exclusion>
           <groupId>org.eclipse.jetty</groupId>
@@ -929,19 +1077,14 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>org.mortbay.jetty</groupId>
-      <artifactId>servlet-api</artifactId>
-      <version>2.5.20110712</version>
-    </dependency>
-    <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-util</artifactId>
-      <version>${dep.jetty}</version>
+      <version>9.2.13.v20150730</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-webapp</artifactId>
-      <version>${dep.jetty}</version>
+      <version>9.2.13.v20150730</version>
       <exclusions>
         <exclusion>
           <artifactId>jetty-servlet</artifactId>
@@ -956,7 +1099,7 @@
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-http</artifactId>
-      <version>${dep.jetty}</version>
+      <version>9.2.13.v20150730</version>
       <exclusions>
         <exclusion>
           <artifactId>jetty-io</artifactId>
@@ -967,7 +1110,7 @@
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-security</artifactId>
-      <version>${dep.jetty}</version>
+      <version>9.2.13.v20150730</version>
       <exclusions>
         <exclusion>
           <groupId>org.eclipse.jetty</groupId>
@@ -978,12 +1121,12 @@
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-continuation</artifactId>
-      <version>${dep.jetty}</version>
+      <version>9.2.13.v20150730</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-xml</artifactId>
-      <version>${dep.jetty}</version>
+      <version>9.2.13.v20150730</version>
       <exclusions>
         <exclusion>
           <artifactId>jetty-util</artifactId>
@@ -994,18 +1137,26 @@
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-jsp</artifactId>
-      <version>${dep.jetty}</version>
+      <version>9.2.13.v20150730</version>
       <exclusions>
         <exclusion>
+          <artifactId>jetty-schemas</artifactId>
+          <groupId>org.eclipse.jetty.toolchain</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>javax.servlet.jsp-api</artifactId>
+          <groupId>javax.servlet.jsp</groupId>
+        </exclusion>
+        <exclusion>
           <artifactId>javax.servlet.jsp</artifactId>
-          <groupId>org.eclipse.jetty.orbit</groupId>
+          <groupId>org.glassfish.web</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>org.apache.jasper.glassfish</artifactId>
-          <groupId>org.eclipse.jetty.orbit</groupId>
+          <artifactId>javax.servlet.jsp.jstl</artifactId>
+          <groupId>org.glassfish.web</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>org.apache.jasper.glassfish</artifactId>
+          <artifactId>org.eclipse.jdt.core</artifactId>
           <groupId>org.eclipse.jetty.orbit</groupId>
         </exclusion>
         <exclusion>
@@ -1013,27 +1164,16 @@
           <groupId>org.eclipse.jetty.orbit</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>org.apache.taglibs.standard.glassfish</artifactId>
-          <groupId>org.eclipse.jetty.orbit</groupId>
-        </exclusion>
-        <exclusion>
           <artifactId>javax.el</artifactId>
-          <groupId>org.eclipse.jetty.orbit</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>com.sun.el</artifactId>
-          <groupId>org.eclipse.jetty.orbit</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>org.eclipse.jdt.core</artifactId>
-          <groupId>org.eclipse.jetty.orbit</groupId>
+          <groupId>org.glassfish</groupId>
         </exclusion>
       </exclusions>
     </dependency>
+
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-io</artifactId>
-      <version>${dep.jetty}</version>
+      <version>9.2.13.v20150730</version>
       <exclusions>
         <exclusion>
           <artifactId>jetty-util</artifactId>
@@ -1044,25 +1184,70 @@
     <dependency>
       <groupId>org.eclipse.jetty.orbit</groupId>
       <artifactId>javax.servlet</artifactId>
-      <version>2.5.0.v201103041518</version>
+      <version>3.0.0.v201112011016</version>
     </dependency>
     <dependency>
-      <groupId>org.mortbay.jetty</groupId>
-      <artifactId>jsp-2.1-glassfish</artifactId>
-      <version>2.1.v20100127</version>
+      <groupId>javax.servlet.jsp.jstl</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet.jsp.jstl</groupId>
+      <artifactId>jstl-api</artifactId>
+      <version>1.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mortbay.jasper</groupId>
+      <artifactId>apache-jsp</artifactId>
+      <version>8.0.27</version>
       <exclusions>
         <exclusion>
-          <artifactId>ant</artifactId>
-          <groupId>ant</groupId>
+          <artifactId>jetty-schemas</artifactId>
+          <groupId>org.eclipse.jetty.toolchain</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>javax.servlet.jsp-api</artifactId>
+          <groupId>javax.servlet.jsp</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>apache-el</artifactId>
+          <groupId>org.mortbay.jasper</groupId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.mortbay.jasper</groupId>
+      <artifactId>apache-el</artifactId>
+      <version>8.0.27</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.el</groupId>
+      <artifactId>el-api</artifactId>
+      <version>2.2</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.el</groupId>
+      <artifactId>javax.el-api</artifactId>
+      <version>3.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet.jsp</groupId>
+      <artifactId>jsp-api</artifactId>
+      <version>2.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.jdt.core.compiler</groupId>
+      <artifactId>ecj</artifactId>
+      <version>4.4.2</version>
     </dependency>
 
     <!-- Guava Dependencies -->
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>14.0.1</version>
+      <version>18.0</version>
     </dependency>
 
     <!-- Commons Dependencies -->
@@ -1074,12 +1259,12 @@
     <dependency>
       <groupId>commons-cli</groupId>
       <artifactId>commons-cli</artifactId>
-      <version>1.2</version>
+      <version>1.3.1</version>
     </dependency>
     <dependency>
       <groupId>commons-configuration</groupId>
       <artifactId>commons-configuration</artifactId>
-      <version>1.9</version>
+      <version>1.10</version>
       <exclusions>
         <exclusion>
           <artifactId>commons-lang</artifactId>
@@ -1091,17 +1276,22 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
+      <version>3.2.2</version>
+    </dependency>
 
     <!-- Logging Dependencies -->
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>${dep.slf4j}</version>
+      <version>1.7.12</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-ext</artifactId>
-      <version>${dep.slf4j}</version>
+      <version>1.7.12</version>
       <exclusions>
         <exclusion>
           <artifactId>slf4j-api</artifactId>
@@ -1120,7 +1310,7 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>jul-to-slf4j</artifactId>
-      <version>${dep.slf4j}</version>
+      <version>1.7.12</version>
       <exclusions>
         <exclusion>
           <artifactId>slf4j-api</artifactId>
@@ -1131,7 +1321,7 @@
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
-      <version>${dep.logback}</version>
+      <version>1.1.3</version>
       <exclusions>
         <exclusion>
           <artifactId>logback-core</artifactId>
@@ -1148,13 +1338,13 @@
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-core</artifactId>
-      <version>${dep.logback}</version>
+      <version>1.1.3</version>
       <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>log4j-over-slf4j</artifactId>
-      <version>${dep.slf4j}</version>
+      <version>1.7.12</version>
       <scope>runtime</scope>
       <exclusions>
         <exclusion>
@@ -1167,7 +1357,7 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>jcl-over-slf4j</artifactId>
-      <version>${dep.slf4j}</version>
+      <version>1.7.12</version>
       <scope>runtime</scope>
       <exclusions>
         <exclusion>
@@ -1181,7 +1371,7 @@
     <dependency>
       <groupId>org.apache.mrunit</groupId>
       <artifactId>mrunit</artifactId>
-      <version>1.0.0</version>
+      <version>1.1.0</version>
       <classifier>hadoop2</classifier>
       <scope>test</scope>
       <exclusions>
@@ -1197,6 +1387,22 @@
           <artifactId>mockito-all</artifactId>
           <groupId>org.mockito</groupId>
         </exclusion>
+        <exclusion>
+          <artifactId>mockito-core</artifactId>
+          <groupId>org.mockito</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>powermock-core</artifactId>
+          <groupId>org.powermock</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>powermock-module-junit4</artifactId>
+          <groupId>org.powermock</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>powermock-api-mockito</artifactId>
+          <groupId>org.powermock</groupId>
+        </exclusion>
       </exclusions>
     </dependency>
 
@@ -1208,12 +1414,12 @@
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-all</artifactId>
-      <version>1.9.5</version>
+      <version>1.10.19</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
+      <version>4.12</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
