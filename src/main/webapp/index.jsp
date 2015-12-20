@@ -119,7 +119,7 @@
 <div class="container">
   <hr>
   <footer>
-    <p>&copy; 2013 bde</p>
+    <p>&copy; 2013-2015 bde</p>
   </footer>
 </div>
 
