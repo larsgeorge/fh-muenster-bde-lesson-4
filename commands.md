@@ -120,6 +120,10 @@ $ /bin/sh target/bin/run -i index.dat
 ...
 ```
 
+Sollte alles geklappt haben, steht der Server unter `http://localhost:8080` zur Verfügung.
+
+![Ergebnis einer Suche](https://raw.githubusercontent.com/larsgeorge/fh-muenster-bde-lesson-4/master/static/img/search1.png)
+
 ### Hive
 Hive wird über die Kommandozeile gestartet. Dann kann man mit der DDL und DML Tabellen anlegen und anschauen:
 
