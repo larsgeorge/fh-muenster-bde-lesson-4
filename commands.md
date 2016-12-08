@@ -3,7 +3,7 @@ Die folgenden Kommandos werden in der Cloudera QuickStart VM in einem Terminal F
 
 Klonen des Source Repositories in einem Terminal, mit anschliessendem Verzeichniswechsel:
 ```
-$ clone https://github.com/larsgeorge/fh-muenster-bde-lesson-4
+$ git clone https://github.com/larsgeorge/fh-muenster-bde-lesson-4
 
 Initialized empty Git repository in /home/cloudera/fh-muenster-bde-lesson-4/.git/
 remote: Counting objects: 257, done.
@@ -63,13 +63,23 @@ $ mvn package
 [INFO] ------------------------------------------------------------------------
 ```
 
-Am Ende sollte `BUILD SUCCESS` stehen. Damit wurden zwei JAR Dateien im `target` Verzeichnis erstellt. Nur die zweite, mit dem `-bin` Postfix ist die richtige mit eingebautem Manifest:
+Am Ende sollte `BUILD SUCCESS` stehen. Damit wurden zwei JAR Dateien im `target` Verzeichnis erstellt. 
+
+Optional, für die Hortonworks VM, zuerst die lokalen JARs und andere Ressourcen in die VM kopieren und dann wechseln:
 
 ```
-$ hadoop jar target/fh-muenster-bde-lesson-4-1.0-SNAPSHOT.jar 
+$ scp -r -P 2222 src/main/resources/books root@localhost:/root/
+$ scp -P 2222 target/fh-muenster-bde-lesson-4-1.0-SNAPSHOT*.jar root@localhost:/root/
+$ ssh root@localhost -p 2222
+```
+
+Nur die zweite, mit dem `-bin` Postfix ist die richtige mit eingebautem Manifest:
+
+```
+$ yarn jar target/fh-muenster-bde-lesson-4-1.0-SNAPSHOT.jar 
 RunJar jarFile [mainClass] args...
 
-$ hadoop jar target/fh-muenster-bde-lesson-4-1.0-SNAPSHOT-bin.jar 
+$ yarn jar target/fh-muenster-bde-lesson-4-1.0-SNAPSHOT-bin.jar 
 An example program must be given as the first argument.
 Valid program names are:
   fileformats: Create various file formats.
@@ -78,18 +88,37 @@ Valid program names are:
 ```
 
 ### TF-IDF Suche
-Um den Suchserver für diese Übung mit Daten zu versehen, muss man noch einmal den TF-IDF Index berechnen lassen. Dazu werden die mitgelieferten Top 20 Bücher auf Gutenberg.org nach HDFS kopiert, und dann der Job angestossen:
+
+Um den Suchserver für diese Übung mit Daten zu versehen, muss man noch einmal den TF-IDF Index berechnen lassen. Dazu werden die mitgelieferten Top 20 Bücher auf Gutenberg.org nach HDFS kopiert, und dann der Job angestossen. Dies sieht leicht anders je nach VM aus.
+
+Für die Hortonworks VM:
+
+```
+$ hdfs dfs -mkdir /user/root
+$ hdfs dfs -put books
+```
+
+Für die Cloudera VM:
 
 ```
 $ hdfs dfs -put src/main/resources/books
-$ hadoop jar target/fh-muenster-bde-lesson-4-1.0-SNAPSHOT-bin.jar tfidf books tfidf1
+```
+
+Dann wir der Job gestartet (hier mit der Ausgabe auf der Hortonworks VM):
+
+```
+$ yarn jar target/fh-muenster-bde-lesson-4-1.0-SNAPSHOT-bin.jar tfidf books tfidf1
 Still running...
-15/12/17 02:30:56 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
-15/12/17 02:30:58 INFO input.FileInputFormat: Total input paths to process : 20
-15/12/17 02:30:58 INFO mapreduce.JobSubmitter: number of splits:20
-15/12/17 02:30:58 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1448350936237_0005
-15/12/17 02:30:59 INFO impl.YarnClientImpl: Submitted application application_1448350936237_0005
-15/12/17 02:30:59 INFO mapreduce.Job: The url to track the job: http://quickstart.cloudera:8088/proxy/application_1448350936237_0005/
+16/12/08 11:15:48 INFO impl.TimelineClientImpl: Timeline service address: http://sandbox.hortonworks.com:8188/ws/v1/timeline/
+16/12/08 11:15:48 INFO client.RMProxy: Connecting to ResourceManager at sandbox.hortonworks.com/172.17.0.2:8050
+16/12/08 11:15:49 INFO client.AHSProxy: Connecting to Application History server at sandbox.hortonworks.com/172.17.0.2:10200
+16/12/08 11:15:50 INFO input.FileInputFormat: Total input paths to process : 20
+16/12/08 11:15:50 INFO lzo.GPLNativeCodeLoader: Loaded native gpl library
+16/12/08 11:15:50 INFO lzo.LzoCodec: Successfully loaded & initialized native-lzo library [hadoop-lzo rev 7a4b57bedce694048432dd5bf5b90a6c8ccdba80]
+16/12/08 11:15:51 INFO mapreduce.JobSubmitter: number of splits:20
+16/12/08 11:15:51 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1481193792470_0001
+16/12/08 11:15:52 INFO impl.YarnClientImpl: Submitted application application_1481193792470_0001
+16/12/08 11:15:52 INFO mapreduce.Job: The url to track the job: http://sandbox.hortonworks.com:8088/proxy/application_1481193792470_0001/
 Still running...
 Still running...
 ...
