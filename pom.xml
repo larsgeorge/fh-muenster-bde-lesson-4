@@ -71,6 +71,16 @@
 
   <repositories>
     <repository>
+      <id>Maven Central</id>
+      <url>http://repo2.maven.org/maven2</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
      <id>HDPReleases</id>
      <name>HDP Releases</name>
      <url>http://repo.hortonworks.com/content/repositories/public</url>
@@ -804,7 +814,7 @@
     <dependency>
       <groupId>javax.inject</groupId>
       <artifactId>inject-api</artifactId>
-      <version>1.0.0-PRD</version>
+      <version>1</version>
     </dependency>
     <dependency>
       <groupId>com.google.code.findbugs</groupId>
