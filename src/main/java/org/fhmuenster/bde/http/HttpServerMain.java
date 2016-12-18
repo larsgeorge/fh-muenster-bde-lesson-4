@@ -1,8 +1,19 @@
 package org.fhmuenster.bde.http;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 import javax.servlet.DispatcherType;
 
+import org.apache.tomcat.InstanceManager;
+import org.apache.tomcat.SimpleInstanceManager;
+import org.eclipse.jetty.annotations.ServletContainerInitializersStarter;
+import org.eclipse.jetty.apache.jsp.JettyJasperInitializer;
+import org.eclipse.jetty.plus.annotation.ContainerInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.commons.cli.CommandLine;
@@ -53,6 +64,26 @@ public class HttpServerMain {
     return cmd;
   }
 
+  private static File getScratchDir() throws IOException {
+ 		File tempDir = new File(System.getProperty("java.io.tmpdir"));
+ 		File scratchDir = new File(tempDir.toString(), "embedded-jetty-jsp");
+
+ 		if (!scratchDir.exists()) {
+ 			if (!scratchDir.mkdirs()) {
+ 				throw new IOException("Unable to create scratch directory: " + scratchDir);
+ 			}
+ 		}
+ 		return scratchDir;
+ 	}
+
+  private static List<ContainerInitializer> jspInitializers() {
+ 		JettyJasperInitializer sci = new JettyJasperInitializer();
+ 		ContainerInitializer initializer = new ContainerInitializer(sci, null);
+ 		List<ContainerInitializer> initializers = new ArrayList<ContainerInitializer>();
+ 		initializers.add(initializer);
+ 		return initializers;
+ 	}
+
   private void startServer(CommandLine params) throws Exception {
     // add Guice filter for all dynamic REST handling
     PortalServletContextListener listener = new PortalServletContextListener();
@@ -74,6 +105,13 @@ public class HttpServerMain {
     WebAppContext context = new WebAppContext();
     context.setResourceBase("./src/main/webapp");
     context.setContextPath("/");
+
+    context.setAttribute("org.eclipse.jetty.containerInitializers", jspInitializers());
+    context.setAttribute("javax.servlet.context.tempdir", getScratchDir());
+    context.setAttribute(InstanceManager.class.getName(), new SimpleInstanceManager());
+    context.addBean(new ServletContainerInitializersStarter(context), true);
+    context.setClassLoader(new URLClassLoader(new URL[0], this.getClass().getClassLoader()));
+
     context.setParentLoaderPriority(true);
     context.setInitParameter("org.eclipse.jetty.servlet.Default.dirAllowed", "false");
     context.setInitParameter("keepgenerated", "true");
