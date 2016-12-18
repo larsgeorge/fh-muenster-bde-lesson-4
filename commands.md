@@ -70,6 +70,7 @@ Optional, für die Hortonworks VM, zuerst die lokalen JARs und andere Ressourcen
 ```
 $ scp -r -P 2222 src/main/resources/books root@localhost:/root/
 $ scp -P 2222 target/fh-muenster-bde-lesson-4-1.0-SNAPSHOT*.jar root@localhost:/root/
+$ scp -r -P 2222 target/bin root@localhost:/root/bin-fhm4
 $ ssh root@localhost -p 2222
 ```
 
@@ -131,20 +132,38 @@ Dies braucht ein wenig Zeit (es sind drei MapReduce Jobs), aber am Ende sollte d
 Still running...
 
 $ hdfs dfs -ls tfidf1
+
 Found 2 items
--rw-r--r--   1 cloudera cloudera          0 2015-12-17 02:33 tfidf1/_SUCCESS
--rw-r--r--   1 cloudera cloudera    8436658 2015-12-17 02:33 tfidf1/part-r-00000
+-rw-r--r--   1 root hdfs          0 2016-12-08 11:18 tfidf1/_SUCCESS
+-rw-r--r--   1 root hdfs    8436658 2016-12-08 11:18 tfidf1/part-r-00000
+
 $ hdfs dfs -get tfidf1/part-r-00000 index.dat
 $ ll
-total 8304
--rw-r--r-- 1 cloudera cloudera 8436658 Dec 17 02:34 index.dat
--rw-rw-r-- 1 cloudera cloudera   39159 Dec 17 02:16 pom.xml
--rw-rw-r-- 1 cloudera cloudera    5870 Dec 17 02:16 README.md
-drwxrwxr-x 2 cloudera cloudera    4096 Dec 17 02:16 slides
-drwxrwxr-x 3 cloudera cloudera    4096 Dec 17 02:16 src
-drwxrwxr-x 4 cloudera cloudera    4096 Dec 17 02:16 static
-drwxrwxr-x 9 cloudera cloudera    4096 Dec 17 02:28 target
+total 58940
+...
+drwxr-xr-x 2 root root     4096 Dec  8 12:27 bin-fhm4
+...
+drwxr-xr-x 2 root root     4096 Dec  8 11:10 books
+...
+-rw-r--r-- 1 root root 46189812 Dec  8 11:08 fh-muenster-bde-lesson-4-1.0-SNAPSHOT-bin.jar
+-rw-r--r-- 1 root root  5313851 Dec  8 11:08 fh-muenster-bde-lesson-4-1.0-SNAPSHOT.jar
+drwxr-xr-x 2 root root     4096 Oct 25 07:21 hdp
+-rw-r--r-- 1 root root  8436658 Dec  8 12:24 index.dat
+...
+
 $ less index.dat 
+```
+
+Für Hortonworks:
+
+```
+$ /bin/sh bin-fhm4/run -i index.dat 
+...
+```
+
+Für Cloudera:
+
+```
 $ /bin/sh target/bin/run -i index.dat 
 ...
 ```
@@ -154,8 +173,8 @@ Sollte alles geklappt haben, steht der Server unter `http://localhost:8080` zur 
 ![Ergebnis einer Suche](https://raw.githubusercontent.com/larsgeorge/fh-muenster-bde-lesson-4/master/static/img/search1.png)
 
 ### Hive
-Hive wird über die Kommandozeile gestartet. Dann kann man mit der DDL und DML Tabellen anlegen und anschauen:
 
+Hive wird über die Kommandozeile gestartet. Dann kann man mit der DDL und DML Tabellen anlegen und anschauen:
 
 ```
 $ hive
@@ -261,10 +280,11 @@ $ hdfs dfs -text /user/hive/warehouse/testtable2/000000_0
 ```
 
 ### Dateiformate
+
 Die JAR Datei für die Übung kommt auch mit einer Implementierung für verschiedene Dateiformate. Diese erlaubt es, Testdaten in verschiedener Größe, Format und Komprimierung zu erzeugen:
 
 ```
-$ hadoop jar target/fh-muenster-bde-lesson-4-1.0-SNAPSHOT-bin.jar fileformats -c snappy -f sequence -k 30 -n 100000 -p 1024 -t block -o snapseq30100k1kblk.bin
+$ yarn jar target/fh-muenster-bde-lesson-4-1.0-SNAPSHOT-bin.jar fileformats -c snappy -f sequence -k 30 -n 100000 -p 1024 -t block -o snapseq30100k1kblk.bin
 Writing to file: snapseq30100k1kblk.bin
 Creating random arrays...
 15/12/17 04:47:49 INFO compress.CodecPool: Got brand-new compressor [.snappy]
