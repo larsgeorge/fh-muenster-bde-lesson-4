@@ -1,15 +1,20 @@
 ## Kommandos
-Die folgenden Kommandos werden in der Cloudera QuickStart VM in einem Terminal Fenster ausgeführt. Dazu muss in der Menüzeile am oberen Bildschirmrand auf der linken Seite auf das Terminal Icon geklickt werden. Danach folgendes machen:
 
-Klonen des Source Repositories in einem Terminal, mit anschliessendem Verzeichniswechsel:
+Die folgenden Kommandos unterscheiden sich, je nachdem welche VM benutzt wird:
+
+- In der Cloudera QuickStart VM wird alles in einem Terminal Fenster innerhalb der VM ausgeführt. Dazu muss in der Menüzeile am oberen Bildschirmrand auf der linken Seite auf das Terminal Icon geklickt werden. Ausserdem kann die enthaltene Eclipse Version genutzt werden für das übersetzen des Projektcodes.
+- Für die Hortonworks VM wird der Code zuerst ausserhalb der VM gecloned, kompiliert und dann in die VM kopiert. Hinweise im Text unten beschreiben die Unterschiede.
+ 
+Erster Schritt ist das Klonen des Source Repositories in einem Terminal, mit anschliessendem Verzeichniswechsel:
+
 ```
-$ git clone https://github.com/larsgeorge/fh-muenster-bde-lesson-4
-
-Initialized empty Git repository in /home/cloudera/fh-muenster-bde-lesson-4/.git/
-remote: Counting objects: 257, done.
-remote: Total 257 (delta 0), reused 0 (delta 0), pack-reused 257
-Receiving objects: 100% (257/257), 7.13 MiB | 111 KiB/s, done.
-Resolving deltas: 100% (52/52), done.
+$ git clone https://github.com/larsgeorge/fh-muenster-bde-lesson-4.git
+Cloning into 'fh-muenster-bde-lesson-4'...
+remote: Counting objects: 305, done.
+remote: Compressing objects: 100% (169/169), done.
+remote: Total 305 (delta 75), reused 305 (delta 75), pack-reused 0
+Receiving objects: 100% (305/305), 7.57 MiB | 710.00 KiB/s, done.
+Resolving deltas: 100% (75/75), done.
 
 $ cd fh-muenster-bde-lesson-4/
 ```
@@ -39,7 +44,7 @@ Downloaded: http://repo.maven.apache.org/maven2/org/mockito/mockito-all/1.9.5/mo
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
 [INFO] Total time: 6:08.988s
-[INFO] Finished at: Thu Dec 17 02:23:07 PST 2015
+[INFO] Finished at: Thu Dec 17 02:23:07 PST 2016
 [INFO] Final Memory: 13M/105M
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal on project fh-muenster-bde-lesson-4: Could not resolve dependencies for project org.fhmuenster.bde:fh-muenster-bde-lesson-4:jar:1.0-SNAPSHOT: Failed to collect dependencies for [org.apache.hadoop:hadoop-common:jar:2.5.0-cdh5.2.0 (compile), org.apache.hadoop:hadoop-hdfs:jar:2.5.0-cdh5.2.0 (compile), org.apache.hadoop:hadoop-client:jar:2.5.0-cdh5.2.0 (compile), 
@@ -58,14 +63,27 @@ $ mvn package
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
 [INFO] Total time: 5:13.315s
-[INFO] Finished at: Thu Dec 17 02:28:34 PST 2015
+[INFO] Finished at: Thu Dec 17 02:28:34 PST 2016
 [INFO] Final Memory: 32M/173M
 [INFO] ------------------------------------------------------------------------
 ```
 
-Am Ende sollte `BUILD SUCCESS` stehen. Damit wurden zwei JAR Dateien im `target` Verzeichnis erstellt. 
+Am Ende sollte `BUILD SUCCESS` stehen. Damit wurden zwei JAR Dateien im `target` Verzeichnis erstellt:
 
-Optional, für die Hortonworks VM, zuerst die lokalen JARs und andere Ressourcen in die VM kopieren und dann wechseln:
+```
+$ ls -la target
+total 100600
+drwxr-xr-x   2 larsgeorge  wheel    68B Dec 20 09:40 archive-tmp
+drwxr-xr-x   4 larsgeorge  wheel   136B Dec 20 09:40 bin
+drwxr-xr-x   7 larsgeorge  wheel   238B Dec 20 09:40 classes
+-rw-r--r--   1 larsgeorge  wheel    44M Dec 20 09:40 fh-muenster-bde-lesson-4-1.0-SNAPSHOT-bin.jar
+-rw-r--r--   1 larsgeorge  wheel   5.1M Dec 20 09:40 fh-muenster-bde-lesson-4-1.0-SNAPSHOT.jar
+drwxr-xr-x   3 larsgeorge  wheel   102B Dec 20 09:40 maven-archiver
+drwxr-xr-x   3 larsgeorge  wheel   102B Dec 20 09:40 maven-status
+drwxr-xr-x  81 larsgeorge  wheel   2.7K Dec 20 09:40 repo
+```
+
+Optional, für die Hortonworks VM, zuerst die lokalen JARs und andere Ressourcen in die VM kopieren und dann per SSH in die VM wechseln:
 
 ```
 $ scp -r -P 2222 src/main/resources/books root@localhost:/root/
@@ -74,7 +92,7 @@ $ scp -r -P 2222 target/bin root@localhost:/root/bin-fhm4
 $ ssh root@localhost -p 2222
 ```
 
-Nur die zweite, mit dem `-bin` Postfix ist die richtige mit eingebautem Manifest:
+Nur die zweite JAR Datei, mit dem `-bin` Postfix, ist die richtige mit eingebautem Manifest:
 
 ```
 $ yarn jar target/fh-muenster-bde-lesson-4-1.0-SNAPSHOT.jar 
@@ -154,21 +172,21 @@ drwxr-xr-x 2 root root     4096 Oct 25 07:21 hdp
 $ less index.dat 
 ```
 
-Für Hortonworks:
+Für Hortonworks muss ein Port benutzt werden, welcher bereits sowohl in VirtualBox, als auch im enthaltenen Docker Container bereits ein _port forwarding_ erlaubt, zum Beispiel "8091":
 
 ```
-$ /bin/sh bin-fhm4/run -i index.dat 
+$ /bin/sh target/bin/run -i index.dat -p 8091
 ...
 ```
 
-Für Cloudera:
+Für Cloudera kann das durch das Maven Plugin erstellte Start Skript genutzt werden:
 
 ```
 $ /bin/sh target/bin/run -i index.dat 
 ...
 ```
 
-Sollte alles geklappt haben, steht der Server unter `http://localhost:8080` zur Verfügung.
+Sollte alles geklappt haben, steht der Server unter `http://localhost:8080` (oder `http://localhost:8091`)zur Verfügung.
 
 ![Ergebnis einer Suche](https://raw.githubusercontent.com/larsgeorge/fh-muenster-bde-lesson-4/master/static/img/search1.png)
 
